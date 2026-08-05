@@ -1,16 +1,32 @@
 # Tracecast
 
 Tracecast 是一个从本地长篇材料生成可追踪播客脚本的工具。它把来源切片、内容规划、材料取舍、
-正文生成、审计和拼接分开执行，并为模型调用和中间产物保留本地记录。
+正文生成和审计分开记录，让用户可以从最终脚本回查材料来源、处理记录和模型调用。
 
-Tracecast 适合需要检查材料来源、编辑路径和模型调用的本地工作流。它不会抓取网页或 PDF、不会把
-审计问题自动改写进正文，也不提供 TTS。随附 Console 是无鉴权的本地调试工具，不是可以直接部署
-到公网的产品前端。
+## 会得到什么
+
+一次成功 Run 会生成可继续编辑的播客脚本，并在 `runs/<run-id>/` 中保留下列本地记录：
+
+- `assembly/script.md`：最终播客脚本；
+- `validation/audit_report.jsonl`：跨阶段审计结果；
+- `llm/call_records.jsonl` 与 `llm/raw/`：调用账本及原始请求/响应；
+- 生成过程的结构化记录，供 Console 展示材料取舍和处理路径。
+
+这些记录可能包含原始材料片段和模型响应。分享或备份前，请按
+[隐私、成本与安全](docs/user/privacy-cost-safety.md)检查内容。
+
+## 适用场景与边界
+
+Tracecast 适合已经准备好本地材料，并希望检查材料来源、编辑取舍和模型调用的工作流。它以已经落地
+的本地文本为输入；网页内容或 PDF 获取与 TTS 由外部工具处理。审计结果独立保存，不会静默改写正文。
+
+随附 Console 仅用于本地检查和调试，不作为网络部署的产品前端。它的监听与鉴权边界见
+[隐私、成本与安全](docs/user/privacy-cost-safety.md)。
 
 ## 安装
 
-需要 Python 3.12 或更高版本。项目目前只支持从源码安装，不通过 PyPI 发布。主路径直接调用虚拟
-环境中的 Python，不要求激活虚拟环境。
+需要 Python 3.12 或更高版本。Tracecast 从源码安装。主路径直接调用虚拟环境中的 Python，不要求
+激活虚拟环境。
 
 PowerShell：
 
@@ -49,7 +65,7 @@ Bash/zsh：
 
 打开 `http://127.0.0.1:8765/`，然后按页面引导执行以下操作：
 
-1. 配置 OpenAI-compatible Chat Completions gateway、API key 和模型名。
+1. 配置 provider gateway、API key 和模型名。
 2. 导入本地文本，确认编码、source profile、来源语言和输出语言，然后创建项目。
 3. 选择与输出语言完全一致的 Host，确认估算，再启动完整 Run。
 4. Run 完成后，在结果页查看脚本。
@@ -84,17 +100,6 @@ cp .env.example .env
 
 成功时 CLI 会输出 `run_id`、artifact 目录、chunk 数和审计项数量。示例限制来源数量和字符数，
 便于先验证连接，但仍会产生多次 provider 调用和费用。
-
-## 会得到什么
-
-一次成功 Run 会在 `runs/<run-id>/` 中保留：
-
-- `assembly/script.md`：最终播客脚本；
-- `validation/audit_report.jsonl`：跨阶段审计结果；
-- `llm/call_records.jsonl` 与 `llm/raw/`：调用账本及原始请求/响应；
-- 各阶段的结构化 artifact，供 Console 查看路径、材料取舍和生成依据。
-
-这些记录可能包含原始材料片段和模型响应。分享或备份前，请按安全页检查内容。
 
 ## 用户文档
 

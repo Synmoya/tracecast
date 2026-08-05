@@ -33,8 +33,8 @@ export async function renderChunklab(container, ctx) {
       <details><summary>高级配置（仅本次生效,叠加在全局覆盖之上）</summary>
         <div data-cl="config"></div></details>
       <label>运行名称（可选）</label><input type="text" data-cl="label">
-      <button class="act ghost" data-cl="estimate">估算(不花钱)</button>
-      <button class="act warn" data-cl="confirm" disabled>确认生成(真实调用)</button>
+      <button class="act ghost" data-cl="estimate">估算</button>
+      <button class="act warn" data-cl="confirm" disabled>确认生成</button>
       <div class="msg" data-cl="msg"></div>
     </div>
     <div class="panel is-hidden" data-cl="result">
