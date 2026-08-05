@@ -1,0 +1,4 @@
+# Host profiles may encode operator-specific editorial preferences. Keep local
+# profiles out of Git; the public example remains the schema/reference fixture.
+/*.json
+!/example_host_zh.json

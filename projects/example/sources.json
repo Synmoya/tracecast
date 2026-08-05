@@ -1,0 +1,20 @@
+{
+  "project_id": "example",
+  "output_language": "zh-CN",
+  "name_resolution_mode": "overrides_only",
+  "sources": [
+    {
+      "source_id": "example_script",
+      "profile": "script_transcript",
+      "path": "raw/example_script.txt",
+      "language": "en",
+      "source_type": "local_text",
+      "source_class": "script_transcript",
+      "trust_tier": "canonical",
+      "title": "Example Observatory Scene",
+      "metadata": {
+        "purpose": "public placeholder material"
+      }
+    }
+  ]
+}

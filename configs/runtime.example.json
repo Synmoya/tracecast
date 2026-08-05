@@ -1,0 +1,198 @@
+{
+  "providers": {
+    "gateway": {
+      "base_url": "https://gateway.example.com/v1",
+      "chat_completions_path": "/chat/completions",
+      "max_output_tokens_field": "max_tokens",
+      "keys": [
+        {
+          "key_id": "default",
+          "api_key_env": "TRACECAST_LLM_API_KEY",
+          "max_concurrency": 8
+        }
+      ]
+    }
+  },
+  "routes": {
+    "atom_boundary_dsl": {
+      "stage": "atomizer",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/ingestion/atom_boundary_dsl.system.{locale}.md",
+      "user_prompt": "prompt/ingestion/atom_boundary_dsl.user.{locale}.md",
+      "repair_prompt": "prompt/ingestion/atom_boundary_dsl.repair.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 180,
+      "max_concurrency": 8,
+      "transport_max_attempts": 3,
+      "transport_backoff_base_seconds": 1.0,
+      "transport_backoff_max_seconds": 30.0,
+      "transport_jitter_ratio": 0.25
+    },
+    "source_profile_probe": {
+      "stage": "intake",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/intake/source_profile_probe.system.{locale}.md",
+      "user_prompt": "prompt/intake/source_profile_probe.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 4096,
+      "timeout_seconds": 120,
+      "max_concurrency": 1
+    },
+    "host_profile_distill": {
+      "stage": "host_builder",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/host_builder/host_profile_distill.system.{locale}.md",
+      "user_prompt": "prompt/host_builder/host_profile_distill.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 8192,
+      "timeout_seconds": 180,
+      "max_concurrency": 1
+    },
+    "host_style_example_reverse": {
+      "stage": "host_builder",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/host_builder/host_style_example_reverse.system.{locale}.md",
+      "user_prompt": "prompt/host_builder/host_style_example_reverse.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 8192,
+      "timeout_seconds": 180,
+      "max_concurrency": 1
+    },
+    "planner_graph_dsl": {
+      "stage": "planner",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/planning/planner_graph_dsl.system.{locale}.md",
+      "user_prompt": "prompt/planning/planner_graph_dsl.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 180,
+      "max_concurrency": 6
+    },
+    "planner_node_compress_dsl": {
+      "stage": "planner",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/planning/planner_node_compress_dsl.system.{locale}.md",
+      "user_prompt": "prompt/planning/planner_node_compress_dsl.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 180,
+      "max_concurrency": 6
+    },
+    "selector_path_dsl": {
+      "stage": "selector",
+      "provider": "gateway",
+      "model": "your-selection-model",
+      "system_prompt": "prompt/selection/selector_path_dsl.system.{locale}.md",
+      "user_prompt": "prompt/selection/selector_path_dsl.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 240,
+      "max_concurrency": 1
+    },
+    "selector_directive_dsl": {
+      "stage": "selector",
+      "provider": "gateway",
+      "model": "your-selection-model",
+      "system_prompt": "prompt/selection/selector_directive_dsl.system.{locale}.md",
+      "user_prompt": "prompt/selection/selector_directive_dsl.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 240,
+      "max_concurrency": 1
+    },
+    "node_edit": {
+      "stage": "node_editor",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/node_edit/node_edit.system.{locale}.md",
+      "user_prompt": "prompt/node_edit/node_edit.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 180,
+      "max_concurrency": 8
+    },
+    "name_table": {
+      "stage": "name_resolution",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/name_resolution/name_table.system.{locale}.md",
+      "user_prompt": "prompt/name_resolution/name_table.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 4096,
+      "timeout_seconds": 180,
+      "max_concurrency": 1
+    },
+    "render_fact_context_dsl": {
+      "stage": "renderer",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/rendering/render_fact_context_dsl.system.{locale}.md",
+      "user_prompt": "prompt/rendering/render_fact_context_dsl.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 8192,
+      "timeout_seconds": 180,
+      "max_concurrency": 1
+    },
+    "node_edit_block_repair": {
+      "stage": "node_editor",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/node_edit/node_edit.system.{locale}.md",
+      "user_prompt": "prompt/node_edit/node_edit_block_repair.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 180,
+      "max_concurrency": 8
+    },
+    "render_chunk": {
+      "stage": "renderer",
+      "provider": "gateway",
+      "model": "your-standard-model",
+      "system_prompt": "prompt/rendering/render_chunk.system.{locale}.md",
+      "user_prompt": "prompt/rendering/render_chunk.user.{locale}.md",
+      "temperature": 0,
+      "max_output_tokens": 40960,
+      "timeout_seconds": 180,
+      "max_concurrency": 8
+    }
+  },
+  "stage_budgets": {
+    "ingestion": {
+      "source_piece_max_tokens": 120,
+      "atom_window_max_input_tokens": 32768,
+      "pieces_per_call_soft_limit": 128
+    },
+    "planning": {
+      "node_window_max_input_tokens": 16000,
+      "target_material_tokens_per_node": 650,
+      "max_final_node_count": 170,
+      "max_compression_rounds": 4,
+      "selection_max_input_tokens": 65536
+    },
+    "node_edit": {
+      "batch_max_input_tokens": 32768,
+      "max_nodes_per_batch": 5
+    },
+    "name_resolution": {
+      "table_max_input_tokens": 49152,
+      "max_rules": 256
+    },
+    "rendering": {
+      "render_max_input_tokens": 65536,
+      "target_material_tokens": 3000,
+      "max_material_tokens": 4500,
+      "max_materials_per_chunk": 80,
+      "fact_context_ratio": 0.1,
+      "fact_context_min_tokens": 80,
+      "fact_context_max_tokens": 320,
+      "prefer_node_boundary": true
+    }
+  }
+}

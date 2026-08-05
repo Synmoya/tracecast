@@ -1,0 +1,9 @@
+{
+  "version": "ingestion_content_kinds@v2",
+  "content_kind_descriptions": {
+    "dialogue": "原文对话或台词。",
+    "narration": "来源中的旁白、场景描述、动作描述、on-screen 文字或 stage direction。",
+    "assertion": "来源作者给出的事实性说明。",
+    "opinion": "来源中的观点、评价或解释。"
+  }
+}

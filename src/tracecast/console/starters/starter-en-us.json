@@ -1,0 +1,37 @@
+{
+  "schema_version": "tracecast-host/2",
+  "host_id": "starter-en-us",
+  "display_name": "English General Starter",
+  "version": "starter-en-us@v1",
+  "output_language": "en-US",
+  "host_thinking": {
+    "viewpoint": "Organize the account around actions, changes, and consequences stated in the material, while separating evidence from interpretation.",
+    "prefer": ["Keep concrete facts and turning points needed to understand the subject"],
+    "avoid": ["Unsupported motives, causes, or background"],
+    "human_directive": [],
+    "rules": ["Editorial choices may change order and emphasis, never the factual boundary."]
+  },
+  "host_expression": {
+    "description": "Clear, measured, natural narration for a general English-language podcast.",
+    "rules": [
+      "Enter the material directly, use connected prose, and avoid stock presenter phrases.",
+      "Opening segment: open with the change already present in the material; do not invent atmosphere or motives.",
+      "Middle segment: compress repeated procedure while retaining the condition that changed the outcome.",
+      "Ending segment: close on the material's stated next condition without manufacturing a larger conclusion."
+    ]
+  },
+  "style_examples_by_position": {
+    "opening": [{
+      "source": "The first ferry was suspended at 6 a.m. because of heavy fog. Staff used the public-address system to update waiting passengers. Visibility returned at 7:20, and the ferry departed.",
+      "render": "Heavy fog disrupted the terminal at six in the morning. The first ferry was suspended, leaving staff to update waiting passengers over the public-address system. At 7:20, visibility returned and the ferry finally departed."
+    }],
+    "middle": [{
+      "source": "The first test ended when a seal failed. The team replaced the seal and ran a second test. The equipment operated continuously for forty minutes.",
+      "render": "A failed seal ended the first test. Once the team replaced it, the second test kept the equipment running for forty minutes, linking the change directly to the result."
+    }],
+    "ending": [{
+      "source": "After the exhibition closed, twelve objects returned to the community archive. Volunteers decided to offer appointment visits once a month.",
+      "render": "When the exhibition closed, its twelve objects returned to the community archive. They did not disappear from public view: volunteers chose to open the collection for appointment visits once a month."
+    }]
+  }
+}

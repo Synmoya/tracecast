@@ -1,0 +1,40 @@
+{
+  "version": "planning_protocol_vocab@v1",
+  "narrative_function_descriptions": {
+    "state_change": "被追踪的状态变了：能动性、身份、生死、归属或关键物品所有权。",
+    "reveal": "披露会重写前后理解的信息；对揭示顺序敏感。",
+    "objective": "目标、动机被设定、改变或放弃。",
+    "conflict": "对抗、冲突或赌注被抬高。",
+    "resolution": "冲突、悬念或张力被结清。",
+    "causal_link": "交代某事为何发生或其后果；本身是重点时也可作为节点主功能。",
+    "movement": "空间、时间转场，移动或场景切换。",
+    "world_lore": "世界内设定、历史或世界机制说明。",
+    "explanation": "对机制、事件或状态为何/如何运作的世界内解释。",
+    "commentary": "作者/评论层的解释、阐释、批评、比较或制作背景。"
+  },
+  "edge_type_descriptions": {
+    "setup_payoff": [
+      "setup：引入之后会被回答、兑现或反转的问题、条件、悬念或伏笔节点。",
+      "payoff：回答、兑现或反转 setup 的节点。",
+      "不要用于普通时间相邻或松散呼应。"
+    ],
+    "causal_link": [
+      "cause：解释、触发或使 effect 成立的节点。",
+      "effect：被解释、触发或导致的节点。",
+      "不要用于单纯先后顺序。"
+    ],
+    "entity_thread": [
+      "a/b：两个节点共享同一人物、地点、物件或概念，且这个共享关系会帮助 selector 理解主线。",
+      "不要因为表面同名就机械连边。"
+    ],
+    "duplicates": [
+      "a/b：两个节点表达同一事件或同一 claim，提示 selector 避免重复讲。"
+    ],
+    "complements": [
+      "a/b：两个节点不重复，但组合起来能补足同一理解。"
+    ],
+    "contrasts": [
+      "a/b：两个节点形成状态、立场、信息或结果上的对照。"
+    ]
+  }
+}

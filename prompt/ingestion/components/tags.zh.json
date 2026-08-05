@@ -1,0 +1,19 @@
+{
+  "version": "ingestion_tags@v1",
+  "tag_descriptions": {
+    "scene_boundary": "场景、地点或叙事段落发生明确切换。",
+    "speaker_turn": "对话中的说话人轮次或回应关系。",
+    "stage_direction": "舞台说明、动作、画面或系统演出提示。",
+    "state_change": "人物、世界、目标或局势发生状态变化。",
+    "causal_link": "片段明确表达原因、结果或触发关系。",
+    "reveal": "此前未知的信息被揭示。",
+    "movement": "人物或物体发生位置、路线或行动迁移。",
+    "conflict": "出现对抗、障碍、争执或战斗。",
+    "resolution": "先前问题、冲突或目标得到收束。",
+    "explanation": "来源在解释事实、机制、背景或创作选择。",
+    "interpretation": "来源对意义、主题或效果作出解释。",
+    "production_context": "开发、制作、发行或创作过程背景。",
+    "critique": "来源作出有明确评价方向的批评或赞赏。",
+    "comparison": "来源把对象与另一作品、版本或标准比较。"
+  }
+}

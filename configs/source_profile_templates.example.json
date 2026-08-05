@@ -1,0 +1,70 @@
+{
+  "version": "source_profiles@v1",
+  "profiles": {
+    "script_transcript": {
+      "description": "Script-like source with dialogue, narration, and factual assertions.",
+      "default_source_class": "script_transcript",
+      "default_trust_tier": "canonical",
+      "allowed_content_kinds": ["dialogue", "narration", "assertion"],
+      "allowed_tags": [
+        "scene_boundary",
+        "speaker_turn",
+        "stage_direction",
+        "state_change",
+        "causal_link",
+        "reveal",
+        "movement",
+        "conflict",
+        "resolution"
+      ]
+    },
+    "official_interview": {
+      "description": "Official interview or developer commentary.",
+      "default_source_class": "official_interview",
+      "default_trust_tier": "high",
+      "allowed_content_kinds": ["assertion", "opinion"],
+      "allowed_tags": [
+        "explanation",
+        "interpretation",
+        "production_context"
+      ]
+    },
+    "research_report": {
+      "description": "Academic research paper or policy report containing attributed analysis and factual claims.",
+      "default_source_class": "research_report",
+      "default_trust_tier": "high",
+      "allowed_content_kinds": ["assertion", "opinion"],
+      "allowed_tags": [
+        "explanation",
+        "interpretation",
+        "critique",
+        "comparison",
+        "production_context"
+      ]
+    },
+    "reference_article": {
+      "description": "Encyclopedic, general-reference, or trade-publication article used as contextual background.",
+      "default_source_class": "reference_article",
+      "default_trust_tier": "low",
+      "allowed_content_kinds": ["assertion", "opinion"],
+      "allowed_tags": [
+        "explanation",
+        "interpretation",
+        "critique",
+        "comparison",
+        "production_context"
+      ]
+    },
+    "review": {
+      "description": "Attributed review or critique; plot facts should not be sourced here.",
+      "default_source_class": "review",
+      "default_trust_tier": "low",
+      "allowed_content_kinds": ["opinion"],
+      "allowed_tags": [
+        "interpretation",
+        "critique",
+        "comparison"
+      ]
+    }
+  }
+}

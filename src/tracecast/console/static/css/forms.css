@@ -1,0 +1,63 @@
+/* Shared inputs and schema-driven parameter editor.
+
+   Inputs use the app-wide :focus-visible ring from base.css — no local
+   outline:none + box-shadow substitute. */
+
+input[type=text], input[type=password], input[type=url], input[type=number],
+input[type=search], input[type=file], select, textarea {
+  width: 100%; min-width: 0; min-height: var(--control-md); padding: var(--pad-md);
+  color: var(--fg); border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  background: var(--panel); font-size: var(--text-sm); transition: .15s border-color; }
+input::placeholder, textarea::placeholder { color: var(--inert); }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+input[type=file] { padding: 5px 7px; }
+input[type=file]::file-selector-button { height: var(--control-sm); margin-right: 10px;
+  padding: 0 10px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  background: var(--raised); color: var(--soft);
+  font: var(--w-semibold) var(--text-2xs) var(--sans); cursor: pointer; }
+textarea { min-height: 76px; resize: vertical; font-family: var(--mono); line-height: 1.55; }
+input[type=checkbox] { accent-color: var(--accent); }
+label { display: block; margin: 13px 0 5px; color: var(--soft);
+        font-size: var(--text-xs); font-weight: var(--w-semibold); }
+.check-row { display: flex; gap: 9px; align-items: baseline; padding: 7px 0;
+             border-bottom: 1px solid var(--border); }
+.check-row input[type=checkbox] { position: relative; top: 2px; width: auto; flex: none; }
+.check-row .kv { margin-left: auto; text-align: right; flex: none; }
+.config-group { margin-top: 18px; padding-top: 7px; border-top: 1px solid var(--border); }
+.config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+               gap: 9px 17px; }
+.config-field { min-width: 0; }
+.config-field.is-changed input { border-color: var(--accent-border);
+                                 background: var(--accent-soft); }
+.config-field small { display: block; min-height: 2.8em; margin-top: 4px;
+                      color: var(--dim); font-size: var(--text-2xs); line-height: 1.5;
+                      overflow-wrap: anywhere; }
+.config-readonly { margin: 5px 0 10px; }
+.config-preview, .form-note { margin-top: 13px; }
+.form-grid { display: grid; gap: var(--space-1) var(--space-4); }
+.form-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.config-heading { display: flex; align-items: center; justify-content: space-between;
+                  gap: var(--space-3); margin: var(--space-4) 0 var(--space-2); }
+.config-heading h3 { margin: 0; }
+.config-section, .config-route { margin: 0 0 var(--space-2); border: 1px solid var(--border);
+                                border-radius: var(--radius-sm); background: var(--panel);
+                                overflow: hidden; }
+.config-section > summary, .config-route > summary { display: flex; align-items: center;
+  justify-content: space-between; gap: var(--space-3); padding: 10px var(--space-3);
+  list-style-position: inside; }
+.config-section[open] > summary, .config-route[open] > summary {
+  border-bottom: 1px solid var(--border); background: var(--hover); }
+.config-section-body, .config-route > .config-grid,
+.config-route > .config-readonly { margin-left: var(--space-3); margin-right: var(--space-3); }
+.config-section-body { padding-bottom: var(--space-4); }
+.config-route > .config-grid { padding-bottom: var(--space-4); }
+.config-summary-meta { margin-left: auto; color: var(--dim); font-size: var(--text-2xs);
+                       font-weight: var(--w-medium); }
+.config-summary-meta b { color: var(--accent-text); }
+.config-group-tools { display: flex; align-items: center; justify-content: space-between;
+                      gap: var(--space-3); margin: var(--space-3) 0; }
+.config-route-filters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, .32fr);
+                        gap: var(--space-2); margin-bottom: var(--space-3); }
+.builder-advanced { margin-top: var(--space-5); padding: var(--space-3);
+                    border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.builder-advanced > summary { font-size: var(--text-sm); }

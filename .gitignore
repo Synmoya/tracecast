@@ -1,0 +1,37 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+tmp/
+.env
+.env.*
+!.env.example
+runs/*
+!runs/.gitignore
+projects/*
+!projects/.gitkeep
+!projects/example/
+!projects/example/**
+
+# Active configs (secret-free copies of the *.example.json templates) stay local
+configs/*.json
+!configs/*.example.json
+
+CLAUDE.md
+
+# Local maintenance workflow, private specifications, and research material.
+# The Chinese user guides remain part of the public source tree.
+AGENTS.md
+.claude/
+docs/*
+!docs/user/
+!docs/user/**
+prompt-decisions/
+hosts/research/
+tools/atom_boundary_sidecar.py
+tests/test_atom_boundary_sidecar.py

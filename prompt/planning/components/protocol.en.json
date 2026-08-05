@@ -1,0 +1,40 @@
+{
+  "version": "planning_protocol_vocab.en@v1",
+  "narrative_function_descriptions": {
+    "state_change": "A tracked state changes: agency, identity, life or death, belonging, or ownership of a key item.",
+    "reveal": "A disclosure changes how earlier and later material is understood; reveal order matters.",
+    "objective": "An objective or motivation is established, changed, or abandoned.",
+    "conflict": "Opposition, conflict, or stakes are raised.",
+    "resolution": "A conflict, question, or tension is resolved.",
+    "causal_link": "Explains why something happened or what followed from it; may itself be the node's main function.",
+    "movement": "A spatial or temporal transition, movement, or scene change.",
+    "world_lore": "In-world setting, history, or world-mechanism explanation.",
+    "explanation": "An in-world explanation of why or how a mechanism, event, or state works.",
+    "commentary": "Authorial or critical explanation, interpretation, critique, comparison, or production context."
+  },
+  "edge_type_descriptions": {
+    "setup_payoff": [
+      "setup: a node that introduces a question, condition, tension, or foreshadowing later answered, fulfilled, or reversed.",
+      "payoff: a node that answers, fulfills, or reverses the setup.",
+      "Do not use for ordinary temporal adjacency or a loose echo."
+    ],
+    "causal_link": [
+      "cause: a node that explains, triggers, or enables the effect.",
+      "effect: a node that is explained, triggered, or caused.",
+      "Do not use for sequence alone."
+    ],
+    "entity_thread": [
+      "a/b: two nodes share the same person, place, object, or concept, and that shared relation helps the selector understand the main line.",
+      "Do not connect nodes mechanically because of a surface-name match."
+    ],
+    "duplicates": [
+      "a/b: two nodes express the same event or claim, warning the selector against retelling it."
+    ],
+    "complements": [
+      "a/b: two non-duplicate nodes complete the same understanding when combined."
+    ],
+    "contrasts": [
+      "a/b: two nodes contrast in state, position, information, or outcome."
+    ]
+  }
+}

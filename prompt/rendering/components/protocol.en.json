@@ -1,0 +1,27 @@
+{
+  "version": "rendering_protocol.en@v12",
+  "source_note": "Fixed Renderer protocol. The selected external HostProfile supplies host thinking, expression, and positional examples for this run; this file owns only dynamic blocks, paragraph authority, and example-safety rules.",
+  "dynamic_blocks": {
+    "chunk_position_block": "The program derives chunk_index, chunk_count, and segment_position from the complete ordered RenderContract sequence, then injects the paragraph-authority description for that position.",
+    "host_thinking_block": "Generated from the selected HostProfile.host_thinking; controls only observation, judgment, and organization.",
+    "host_expression_block": "Generated from the selected HostProfile.host_expression; controls only expression.",
+    "style_examples_block": "Uses segment_position to inject external source-to-render conversion examples from the selected HostProfile; demonstrates only selection, organization, viewpoint placement, and spoken rhythm, and is not a factual source for the current project.",
+    "fact_context_block": "Planned deduplication hints for concurrent Renderers; identifies only repetition risk already scheduled in earlier plans, is not a factual source, and contains no body text from another chunk.",
+    "annotated_materials_block": "The current RenderContract's final visible evidence packet after Node Edit; unmarked text is factual material, while directives are inserted only as local controls.",
+    "forbidden_block": "Taken from the current RenderContract.forbidden_claims; `none` when empty."
+  },
+  "segment_positions": {
+    "opening": "You have entry authority for the whole episode: establish the episode's question, angle of observation, or necessary premise and move naturally into the current material. Do not preview an outline or complete later conclusions early.",
+    "middle": "You do not have authority to reopen or close the whole episode: continue the established narrative and advance the current material directly. Do not greet, restart the central question, or elevate a local result into the episode's final conclusion.",
+    "ending": "First handle the current material completely, then use whole-episode closing authority: recover an established central question, judgment, or aftertaste without introducing a new question, new material, or a larger climax.",
+    "single": "This segment has entry, progression, and closing authority together. Complete all three naturally around the same material without previewing an outline or expanding into channel ritual."
+  },
+  "style_example_protocol": {
+    "selection": "For Host v2, select one sample from the current segment_position pool using a stable run/chunk key; for single, select one opening and one ending sample. Preserve the historical two-sample projection for Host v1.",
+    "usage": [
+      "Examples are external preferred finished scripts unrelated to the current project. Their materials, facts, proper names, sentences, and metaphors must never enter the current body text.",
+      "Learn selection, connection, viewpoint placement, and spoken rhythm from material to prose; do not reproduce the example's subject, sentence shape, or paragraph length.",
+      "A sample pool may retain multiple organizational shapes. Selection is reproducible within one run and may vary across runs; never insert the entire pool into one prompt."
+    ]
+  }
+}

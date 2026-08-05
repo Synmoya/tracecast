@@ -1,0 +1,19 @@
+{
+  "version": "ingestion_tags.en@v1",
+  "tag_descriptions": {
+    "scene_boundary": "A clear shift of scene, place, or narrative section.",
+    "speaker_turn": "A speaker turn or response relation in dialogue.",
+    "stage_direction": "Stage direction, action, visual presentation, or system presentation cue.",
+    "state_change": "A change in the state of a person, the world, an objective, or the situation.",
+    "causal_link": "An explicit cause, result, or trigger relation.",
+    "reveal": "Previously unknown information is disclosed.",
+    "movement": "A person or object changes position, route, or action location.",
+    "conflict": "Opposition, an obstacle, a dispute, or combat appears.",
+    "resolution": "A prior problem, conflict, or objective reaches closure.",
+    "explanation": "The source explains facts, mechanisms, background, or creative choices.",
+    "interpretation": "The source interprets meaning, theme, or effect.",
+    "production_context": "Background about development, production, release, or the creative process.",
+    "critique": "The source expresses clearly directed criticism or praise.",
+    "comparison": "The source compares an object with another work, version, or standard."
+  }
+}

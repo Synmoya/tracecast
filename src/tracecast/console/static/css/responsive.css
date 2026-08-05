@@ -1,0 +1,82 @@
+/* Responsive adaptations and hard overflow guarantees. */
+@media (max-width: 1120px) {
+  #app { grid-template-columns: 232px minmax(0, 1fr); }
+  .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metric:nth-child(2) { border-right: 0; }
+  .metric:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .stage-rail { grid-template-columns: repeat(9, 112px); }
+  .load-row { grid-template-columns: 28px minmax(80px,1fr) 86px; }
+  .load-row > span:last-child { display: none; }
+  .builder-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 780px) {
+  #app { display: block; }
+  aside#sidebar { position: static; height: auto; max-height: none; }
+  .side-head { padding: var(--space-4); }
+  .side-tools { display: flex; gap: 5px; overflow-x: auto; }
+  .side-tools a { flex: none; margin: 0; }
+  .side-runs { max-height: 42vh; }
+  #run-list-nav { max-height: 28vh; }
+  .side-foot { display: flex; justify-content: flex-end; }
+  main#view { padding: 22px 15px 58px; }
+  .page-title { font-size: var(--text-xl); }
+  .run-title-row { display: block; }
+  .run-state { margin-top: 14px; }
+  .run-tabs { gap: var(--space-5); overflow-x: auto; }
+  .workspace-heading, .stage-header, .result-hero { display: block; }
+  .host-detail-head { display: block; }
+  .host-meta { justify-content: flex-start; margin-top: 10px; }
+  .stage-status { display: inline-block; margin-top: 14px; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .metric { min-height: 118px; padding: 19px; }
+  .summary-list, .audit-layout { grid-template-columns: 1fr; }
+  .summary-list > div { border-right: 0 !important; }
+  .summary-list > div:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .summary-list > div:last-child { border-bottom: 0; }
+  .result-actions { margin-top: 18px; }
+  .result-stats { grid-template-columns: 1fr 1fr; }
+  .result-stats > *:nth-child(2) { border-right: 0; }
+  .result-stats > *:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .script-viewer { padding: 28px 22px; }
+  .script-viewer > .measure { font-size: var(--text-lg); line-height: 1.9; }
+  .lineage-list li { grid-template-columns: 28px minmax(0,1fr); }
+  .lineage-list code { grid-column: 2; }
+  .sxs { grid-template-columns: 1fr; }
+  .page-head-actions { display: block; }
+  .page-head-actions .link-button { margin-top: var(--space-4); }
+  .host-library-layout { display: block; }
+  .host-browser { display: none; }
+  .host-mobile-control { display: block; }
+  .sample-grid { grid-template-columns: 1fr; }
+  .settings-overview { grid-template-columns: 1fr; }
+  .settings-overview > div { border-right: 0; border-bottom: 1px solid var(--border); }
+  .settings-overview > div:last-child { border-bottom: 0; }
+}
+
+@media (max-width: 480px) {
+  .metric-grid { grid-template-columns: 1fr; }
+  .metric { min-height: 0; border-right: 0; border-bottom: 1px solid var(--border); }
+  .metric:last-child { border-bottom: 0; }
+  .result-stats { grid-template-columns: 1fr; }
+  .result-stats > * { border-right: 0 !important; border-bottom: 1px solid var(--border); }
+  .result-stats > *:last-child { border-bottom: 0; }
+  .result-actions { display: grid; }
+  .result-actions .act { width: 100%; }
+  .summary-list > div { grid-template-columns: 1fr; gap: 4px; }
+  .summary-list dd { text-align: left; }
+  .name-map > div { grid-template-columns: 1fr; }
+  .name-map b { text-align: left; }
+  .load-row { grid-template-columns: 28px minmax(70px,1fr) 78px; gap: var(--space-2); }
+  .issue { grid-template-columns: 1fr; gap: 3px; }
+  .form-grid-2, .config-route-filters { grid-template-columns: 1fr; }
+  .estimate-metrics { grid-template-columns: 1fr 1fr; }
+  .estimate-metrics > div:nth-child(2) { border-right: 0; }
+  .estimate-metrics > div:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .builder-actions { display: grid; }
+  .builder-actions .act { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}

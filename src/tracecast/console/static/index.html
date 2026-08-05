@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracecast Workspace</title>
+<link rel="stylesheet" href="/static/css/console.css">
+<script>
+// Applied before first paint so a stored light choice never flashes dark.
+try {
+  var stored = localStorage.getItem("tracecast.console.theme.v1");
+  document.documentElement.dataset.theme = stored
+    || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+} catch (e) { document.documentElement.dataset.theme = "dark"; }
+</script>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div class="side-head">
+      <h1>tracecast<span>workspace</span></h1>
+      <div id="jobbox">idle</div>
+    </div>
+    <nav class="side-tools">
+      <a class="primary" href="#/new">＋ 新建运行</a>
+      <a href="#/hosts">Host 库</a>
+      <a href="#/setup">快速配置</a>
+      <a href="#/config">运行设置</a>
+    </nav>
+    <div class="side-runs">
+      <div class="side-runs-head">
+        <span class="eyebrow">运行记录</span>
+        <button class="mini" id="runs-refresh">刷新</button>
+      </div>
+      <input type="text" id="runs-search" placeholder="搜索项目、名称或 ID…" autocomplete="off">
+      <div id="run-list-nav"></div>
+    </div>
+    <div class="side-foot">
+      <button class="mini" id="theme-toggle" type="button">亮色</button>
+    </div>
+  </aside>
+  <main id="view"></main>
+</div>
+<datalist id="run-list"></datalist>
+<script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

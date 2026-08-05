@@ -1,0 +1,7 @@
+/* Console styles are intentionally build-free and split by tuning surface. */
+@import url("./base.css");
+@import url("./layout.css");
+@import url("./components.css");
+@import url("./forms.css");
+@import url("./reports.css");
+@import url("./responsive.css");

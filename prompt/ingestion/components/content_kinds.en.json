@@ -1,0 +1,9 @@
+{
+  "version": "ingestion_content_kinds.en@v2",
+  "content_kind_descriptions": {
+    "dialogue": "Dialogue or spoken lines from the source.",
+    "narration": "Narration, scene description, action description, on-screen text, or stage directions from the source.",
+    "assertion": "A factual statement made by the source author.",
+    "opinion": "An opinion, evaluation, or interpretation in the source."
+  }
+}
