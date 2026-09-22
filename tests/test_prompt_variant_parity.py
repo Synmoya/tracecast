@@ -127,12 +127,6 @@ def test_prompt_markdown_variant_file_sets_placeholders_versions_and_dsl_match()
             for locale, text in texts.items():
                 assert literal in text, f"{route}.{locale} lost DSL literal {literal!r}"
 
-    for route in ("rendering/render_chunk.system", "rendering/render_chunk.user"):
-        assert "【叙事提示｜…】" in by_locale["zh"][route].read_text(encoding="utf-8")
-        assert "【Narrative cue | …】" in by_locale["en"][route].read_text(
-            encoding="utf-8"
-        )
-
 
 def test_prompt_json_variant_file_sets_keys_shapes_and_versions_match() -> None:
     by_locale = {locale: _locale_files(locale, "json") for locale in LOCALES}

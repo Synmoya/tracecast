@@ -11,6 +11,7 @@ from typing import Any
 import pytest
 
 import tracecast.prompt_components as prompt_components
+from tracecast.control_prompt import ControlPromptLocale
 from tracecast.domain import (
     ContentKind,
     LlmCallRecord,
@@ -751,23 +752,39 @@ def test_fact_context_single_selected_node_skips_model_call(tmp_path: Path) -> N
     assert result.contexts[0].metadata["reason"] == "no_earlier_node"
 
 
-def test_material_projection_is_one_block_with_inline_directives_only() -> None:
+@pytest.mark.parametrize(
+    "locale, marker",
+    [
+        (ControlPromptLocale.zh, "【叙事提示｜…】"),
+        (ControlPromptLocale.en, "[NARRATIVE NOTE | …]"),
+    ],
+)
+def test_material_projection_is_one_block_with_inline_directives_only(
+    locale: ControlPromptLocale, marker: str,
+) -> None:
     contract = _contract(0, two_nodes=True)
-    projected = project_chunk(contract)
-    assert projected == (
-        "【叙事提示｜先交代变化，不逐条复述】\n\n"
-        "第1段原始材料甲。\n\n"
-        "【叙事提示｜收束到结果】\n\n"
-        "第1段原始材料乙。"
+    projected = project_chunk(contract, control_prompt_locale=locale)
+    assert projected == "\n\n".join(
+        (
+            marker.replace("…", "先交代变化，不逐条复述"),
+            "第1段原始材料甲。",
+            marker.replace("…", "收束到结果"),
+            "第1段原始材料乙。",
+        )
     )
     for leaked in ("NODE", "ATOM", "TXT ", "role=", "op=", "speaker_turn", "N1"):
         assert leaked not in projected
+    config = RuntimeConfig.load(REPO_ROOT / "configs" / "runtime.example.json", load_env=False)
+    actual_marker = projected.splitlines()[0].replace(contract.nodes[0].directive, "…")
+    for loader in (load_system_prompt, load_user_prompt):
+        prompt, _version = loader("render_chunk", config, control_prompt_locale=locale)
+        assert actual_marker in prompt
 
 
-def test_rendering_protocol_v12_contains_only_system_owned_render_rules() -> None:
+def test_rendering_protocol_v13_contains_only_system_owned_render_rules() -> None:
     catalog = prompt_components.load_rendering_protocol_catalog()
 
-    assert catalog.version == "rendering_protocol@v12"
+    assert catalog.version == "rendering_protocol@v13"
     assert [key for key, _description in catalog.dynamic_blocks] == [
         "chunk_position_block",
         "host_thinking_block",
@@ -804,7 +821,7 @@ def test_rendering_protocol_v12_contains_only_system_owned_render_rules() -> Non
         ("empty_usage", "non-empty style_example_protocol.usage"),
     ],
 )
-def test_rendering_protocol_v12_rejects_invalid_system_catalogs(
+def test_rendering_protocol_v13_rejects_invalid_system_catalogs(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     invalid_case: str,

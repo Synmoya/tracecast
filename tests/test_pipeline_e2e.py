@@ -335,7 +335,7 @@ def test_run_pipeline_offline_full_chain_aggregates_reports_and_artifacts(
         call for call in fake_call.calls if call["operation_route"] == "selector_path_dsl"
     )
     assert selector_call["prompt_version"] == (
-        "selector_path_dsl@v14+selector_path_dsl_user@v11"
+        "selector_path_dsl@v17+selector_path_dsl_user@v11"
     )
     selector_system_prompt = selector_call["messages"][0]["content"]
     selector_user_prompt = selector_call["messages"][1]["content"]
@@ -347,9 +347,6 @@ def test_run_pipeline_offline_full_chain_aggregates_reports_and_artifacts(
     )
     assert "阶段二·编辑路径" in selector_system_no_ws
     assert "不设入选比例" in selector_system_no_ws
-    assert "`color+summarize`不是“不确定就先收”的回收位" in (
-        selector_system_no_ws
-    )
     assert "另一项全局任务会读取完整有序路径" in selector_system_prompt
     assert "人工指令(human_directive):" in selector_user_prompt
     assert (

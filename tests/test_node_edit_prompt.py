@@ -250,7 +250,7 @@ def test_build_node_edit_plan_uses_system_and_user_prompt_versions(tmp_path: Pat
     assert output.stage_reports == []
 
 
-def test_production_node_edit_v6_exposes_stable_dsl_contract() -> None:
+def test_production_node_edit_v7_exposes_stable_dsl_contract() -> None:
     config = RuntimeConfig.load(
         Path(__file__).resolve().parents[1] / "configs" / "runtime.example.json",
         load_env=False,
@@ -261,8 +261,8 @@ def test_production_node_edit_v6_exposes_stable_dsl_contract() -> None:
         "node_edit_block_repair", config
     )
 
-    assert system_version == "node_edit@v6"
-    assert user_version == "node_edit_user@v5"
+    assert system_version == "node_edit@v7"
+    assert user_version == "node_edit_user@v6"
     assert repair_user_version == "node_edit_block_repair_user@v2"
     assert "`K`" in system_prompt
     assert "`C`" in system_prompt

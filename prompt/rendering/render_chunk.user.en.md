@@ -1,4 +1,4 @@
-<!-- version: render_chunk_user.en@v11 -->
+<!-- version: render_chunk_user.en@v12 -->
 
 Target output language: {{output_language}}
 
@@ -24,7 +24,7 @@ Target output language: {{output_language}}
 
 ## Source materials
 
-The following is one continuous material block and may contain mixed source languages. All unmarked text is original material. `【Narrative cue | …】` is a local annotation inserted by the system and applies from its position until the next annotation. Connect the complete block directly into target-language body prose rather than retelling inputs one by one or emitting an intermediate translation.
+The following is one continuous material block and may contain mixed source languages. All unmarked text is original material. `[NARRATIVE NOTE | …]` is a local annotation inserted by the system and applies from its position until the next annotation. Connect the complete block directly into target-language body prose rather than retelling inputs one by one or emitting an intermediate translation.
 
 {{annotated_materials_block}}
 

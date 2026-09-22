@@ -1,4 +1,4 @@
-<!-- version: node_edit_user.en@v5 -->
+<!-- version: node_edit_user.en@v6 -->
 
 Candidate aliases in this call: {{candidate_alias_range}}
 Material aliases in this call: {{material_alias_range}}
@@ -45,13 +45,9 @@ ENDNODE
 
 {{node_blocks}}
 
-The material above is complete. Proceed in order:
-1. Review every M in each NODE under edit. Tentatively assign K/C/O and ensure every M has exactly one final assignment, with no omissions or duplicates:
-   - K: does it contain a fact, relation, qualification, order, attribution, or listening value that current K/C cannot replace?
-   - C: is the range continuous and coherent, and can one evidence note fully cover it without losing qualifications or attribution?
-   - O: does removal truly leave no comprehension, reference, cause, condition, scene, or expressive-value gap, and is the reason accurate?
-2. Check every C range's `TXT`: does it record only information in that range, without host voice, transitions, evaluation, or unsupported explanation, and immediately follow its C row?
-3. Review the overall distribution: did frequent or rare use of a control in another node cause imitation or balancing? If so, judge again from this node's material rather than matching precedent.
-4. Check output shape: no cross-NODE references or invented aliases/fields; every C is followed by `TXT`; every O has a reason; K needs none; output is bare DSL without JSON, Markdown, code fences, headings, or explanations.
+The material above is complete. Before output, check:
+1. Each node's K/C is sufficient for its current DIR and degree of development: retain necessary details, qualifications, and attribution while actually removing unrelated branches. Every TXT draws only on its referenced range, without host voice, transitions, or added explanations.
+2. Every M is assigned exactly once to K/C/O. C ranges are continuous and stay inside one NODE. Use no aliases outside the input.
+3. Every C is immediately followed by TXT and every O has a reason. Output only bare DSL allowed by the protocol above, without explanations.
 
 Output only bare DSL.

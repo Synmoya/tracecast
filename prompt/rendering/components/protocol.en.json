@@ -1,5 +1,5 @@
 {
-  "version": "rendering_protocol.en@v12",
+  "version": "rendering_protocol.en@v13",
   "source_note": "Fixed Renderer protocol. The selected external HostProfile supplies host thinking, expression, and positional examples for this run; this file owns only dynamic blocks, paragraph authority, and example-safety rules.",
   "dynamic_blocks": {
     "chunk_position_block": "The program derives chunk_index, chunk_count, and segment_position from the complete ordered RenderContract sequence, then injects the paragraph-authority description for that position.",
@@ -11,7 +11,7 @@
     "forbidden_block": "Taken from the current RenderContract.forbidden_claims; `none` when empty."
   },
   "segment_positions": {
-    "opening": "You have entry authority for the whole episode: establish the episode's question, angle of observation, or necessary premise and move naturally into the current material. Do not preview an outline or complete later conclusions early.",
+    "opening": "You have entry and progression authority for the whole episode: after establishing the question, angle of observation, or necessary premise, continue through the remaining narrative units in this chunk rather than writing only an introduction. Do not preview an outline or complete later conclusions early.",
     "middle": "You do not have authority to reopen or close the whole episode: continue the established narrative and advance the current material directly. Do not greet, restart the central question, or elevate a local result into the episode's final conclusion.",
     "ending": "First handle the current material completely, then use whole-episode closing authority: recover an established central question, judgment, or aftertaste without introducing a new question, new material, or a larger climax.",
     "single": "This segment has entry, progression, and closing authority together. Complete all three naturally around the same material without previewing an outline or expanding into channel ritual."

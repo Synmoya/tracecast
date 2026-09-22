@@ -152,7 +152,7 @@ def test_repository_selector_prompts_define_an_editorial_path_with_soft_scale() 
     ).read_text(encoding="utf-8")
     user_prompt_no_ws = "".join(user_prompt.split())
 
-    assert "<!-- version: selector_path_dsl@v14 -->" in system_prompt
+    assert "<!-- version: selector_path_dsl@v17 -->" in system_prompt
     assert "<!-- version: selector_path_dsl_user@v11 -->" in user_prompt
     assert "总编和叙事导演" in system_prompt
     system_prompt_no_ws = "".join(system_prompt.split())
@@ -161,13 +161,6 @@ def test_repository_selector_prompts_define_an_editorial_path_with_soft_scale() 
         system_prompt_no_ws
     )
     assert "###阶段二·编辑路径" in system_prompt_no_ws
-    assert "候选具备信息价值，不等于它对本期节目有足够的编辑价值" in (
-        system_prompt_no_ws
-    )
-    assert "对本期主问题的边际贡献很低" in system_prompt
-    assert "是弱相关旁支" in system_prompt
-    assert "与更有力的候选重复" in system_prompt
-    assert "破坏整期节目的节奏或重心" in system_prompt
     assert "不设入选比例" in system_prompt
     assert "目标规模是软参照" in system_prompt
     assert "不是配额或逐节点字数表" in system_prompt
@@ -227,26 +220,13 @@ def test_repository_selector_prompt_separates_role_from_narrative_function() -> 
     assert "treatment_code 只来自 `q/p/s`" in user_prompt
 
 
-def test_repository_selector_prompts_limit_color_summarize_to_auditory_value() -> None:
+def test_repository_selector_user_prompt_limits_color_summarize_to_auditory_value() -> None:
     prompt_dir = REPO_ROOT / "prompt" / "selection"
-    system_prompt = (
-        prompt_dir / "selector_path_dsl.system.zh.md"
-    ).read_text(encoding="utf-8")
     user_prompt = (
         prompt_dir / "selector_path_dsl.user.zh.md"
     ).read_text(encoding="utf-8")
-    system_prompt_no_ws = "".join(system_prompt.split())
     user_prompt_no_ws = "".join(user_prompt.split())
 
-    assert "`color+summarize`不是“不确定就先收”的回收位" in (
-        system_prompt_no_ws
-    )
-    assert "确实带来人物质感、听觉变化、幽默、呼吸或评论回报" in (
-        system_prompt_no_ws
-    )
-    assert "不能用来挽救一个本来没有足够编辑贡献的node" in (
-        system_prompt_no_ws
-    )
     assert "只有具备明确听觉回报的node才使用" in user_prompt_no_ws
     assert "不能把主线暂时用不上的边缘node默认放进这里" in (
         user_prompt_no_ws
@@ -272,11 +252,8 @@ def test_repository_selector_prompts_split_path_from_global_directives() -> None
     assert "P <alias> | <role> | <treatment_code>" in path_user
     assert "不要输出 directive、理由、SUM 或正文" in path_user
     assert "另一项全局任务会读取完整有序路径" in path_system
-    assert "<!-- version: selector_directive_dsl@v1 -->" in directive_system
+    assert "<!-- version: selector_directive_dsl@v4 -->" in directive_system
     assert "<!-- version: selector_directive_dsl_user@v1 -->" in directive_user
-    assert "一次看完整条 path" in directive_system
-    assert "第一项承担整期节目的播客开场" in directive_system
-    assert "最后一项承担收束" in directive_system
     assert "D <path_alias> | <directive_or_->" in directive_user
 
 

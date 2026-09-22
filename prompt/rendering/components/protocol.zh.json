@@ -1,5 +1,5 @@
 {
-  "version": "rendering_protocol@v12",
+  "version": "rendering_protocol@v13",
   "source_note": "Renderer 固定协议。host 的思维、表达与位置示例来自本 run 选择的外部 HostProfile；本文件只拥有动态块、段落权和示例安全规则。",
   "dynamic_blocks": {
     "chunk_position_block": "程序根据完整 ordered RenderContract 序列派生 chunk_index、chunk_count 与 segment_position，并注入该位置唯一对应的段落权说明。",
@@ -11,7 +11,7 @@
     "forbidden_block": "来自当前 RenderContract.forbidden_claims；为空时为 none。"
   },
   "segment_positions": {
-    "opening": "你拥有整期节目的进入权：可以建立本期问题、观察角度或必要前提，并自然进入当前材料；不要预演目录，也不要提前替后文完成结论。",
+    "opening": "你拥有整期节目的进入与推进权：建立本期问题、观察角度或必要前提后，继续完成本块其余叙事单元，不要只写开场引子；不要预演目录，也不要提前替后文完成结论。",
     "middle": "你不拥有重新开场或整期收束的权利：直接承接已有叙述并推进当前材料，不问候、不重启总题、不把局部结果升格成整期结论。",
     "ending": "先完整处理当前材料，再使用整期收束权：可以回收已经建立的主问题、判断或余味，但不另起新问题、新材料或更大的高潮。",
     "single": "本段同时拥有进入、推进和收束权：三者围绕同一材料自然完成，不预演目录，不扩写成频道仪式。"
