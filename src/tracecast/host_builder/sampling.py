@@ -229,14 +229,28 @@ def split_preference_spans(
     if start < 0 or stop < start or stop > len(text):
         raise ValueError("invalid preference-text span")
     spans: list[tuple[int, int]] = []
+    # Ignore early breaks that would turn a hard-cut sentence remainder into
+    # an isolated style example. Scale down for deliberately small budgets.
+    min_tokens = min(32, max_tokens // 4)
     pos = start
     while pos < stop:
         cap = _token_cap_end(text, pos, stop, max_tokens)
-        cut = cap if cap == stop else _best_break(text, pos, cap)
+        cut = cap if cap == stop else _best_break(text, pos, cap, min_tokens=min_tokens)
         if cut <= pos:
             cut = cap
         spans.append((pos, cut))
         pos = cut
+    if len(spans) > 1 and estimate_tokens(text[slice(*spans[-1])]) < min_tokens:
+        # Keep a short ending with adjacent original text. If the pair does
+        # not fit, rebalance it without exceeding the existing hard cap.
+        pair_start, pair_end = spans[-2][0], spans[-1][1]
+        pair_tokens = estimate_tokens(text[pair_start:pair_end])
+        if pair_tokens <= max_tokens:
+            spans[-2:] = [(pair_start, pair_end)]
+        else:
+            cap = _token_cap_end(text, pair_start, pair_end, (pair_tokens + 1) // 2)
+            cut = _best_break(text, pair_start, cap, min_tokens=min_tokens)
+            spans[-2:] = [(pair_start, cut), (cut, pair_end)]
     return spans
 
 
@@ -476,23 +490,29 @@ def _token_cap_end(text: str, start: int, stop: int, max_tokens: int) -> int:
     return max(start + 1, low)
 
 
-def _best_break(text: str, start: int, cap: int) -> int:
+def _best_break(text: str, start: int, cap: int, *, min_tokens: int = 0) -> int:
     window = text[start:cap]
+
+    def enough_context(cut: int) -> bool:
+        return estimate_tokens(text[start:cut]) >= min_tokens
+
     paragraph = None
     for match in _PARAGRAPH_BREAK.finditer(window):
         paragraph = start + match.end()
-    if paragraph is not None:
+    if paragraph is not None and enough_context(paragraph):
         return paragraph
     for chars in (_SENTENCE_PUNCT, _CLAUSE_PUNCT):
         index = max((window.rfind(char) for char in chars), default=-1)
-        if index >= 0:
+        if index >= 0 and enough_context(start + index + 1):
             return start + index + 1
     newline = window.rfind("\n")
-    if newline >= 0:
+    if newline >= 0 and enough_context(start + newline + 1):
         return start + newline + 1
     for index in range(len(window) - 1, -1, -1):
         if window[index].isspace():
-            return start + index + 1
+            if enough_context(start + index + 1):
+                return start + index + 1
+            break
     return cap
 
 

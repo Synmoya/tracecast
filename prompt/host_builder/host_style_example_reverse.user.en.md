@@ -1,4 +1,4 @@
-<!-- version: host_style_example_reverse_user.en.v2 -->
+<!-- version: host_style_example_reverse_user.en.v3 -->
 # Current call
 
 ## Input structure
@@ -18,7 +18,7 @@ ENDEXAMPLE
 ```
 
 - Exactly one `EXAMPLE` block per alias, covering every alias in the input.
-- `SOURCE` is that script's plain input, at least one line and possibly several.
+- `SOURCE` is that script's plain input, at least one line and possibly several; `ENDSOURCE` on its own line closes the material, followed by `ENDEXAMPLE` on its own line to close the whole example. These two closing markers are the final two lines of every block, in that order.
 - Do not output the finished script itself, the position, commentary, or a lesson.
 
 ## Finished scripts
@@ -27,4 +27,4 @@ ENDEXAMPLE
 
 ## Check before output
 
-Confirm that every `source` preserves all events its finished script states and adds no new facts; that every alias appears exactly once; that no `source` is identical to its finished script; and that the final content is bare DSL only.
+Confirm that every `source` preserves all events its finished script states, adds no new facts, and is not identical to that script; that every alias appears exactly once; and that each block ends with the two lines `ENDSOURCE` then `ENDEXAMPLE`, with bare DSL only in the final content.

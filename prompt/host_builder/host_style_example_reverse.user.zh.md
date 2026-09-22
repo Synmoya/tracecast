@@ -1,4 +1,4 @@
-<!-- version: host_style_example_reverse_user.zh.v2 -->
+<!-- version: host_style_example_reverse_user.zh.v3 -->
 # 本次调用
 
 ## 输入结构
@@ -18,7 +18,7 @@ ENDEXAMPLE
 ```
 
 - 每个 alias 恰好一个 `EXAMPLE` 块，必须覆盖输入中的全部 alias。
-- `SOURCE` 是该成稿的朴素输入，至少一行，可跨多行。
+- `SOURCE` 是该成稿的朴素输入，至少一行，可跨多行；单独一行 `ENDSOURCE` 结束材料，随后单独一行 `ENDEXAMPLE` 结束整个示例。每个块的最后两行依次是这两个结束标记。
 - 不输出成稿本身，也不输出 position、说明或学习点。
 
 ## 成稿
@@ -27,4 +27,4 @@ ENDEXAMPLE
 
 ## 输出前检查
 
-确认每个 source 都保留了对应成稿陈述的全部事件且没有新增事实；确认全部 alias 恰好各出现一次；确认没有任何一个 source 与成稿逐字相同；最终内容只有裸 DSL。
+确认每个 source 保留对应成稿陈述的全部事件、没有新增事实且不与成稿逐字相同；全部 alias 恰好各出现一次；每块以 `ENDSOURCE`、`ENDEXAMPLE` 两行依次结束，最终内容只有裸 DSL。
