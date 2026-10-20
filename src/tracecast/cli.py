@@ -158,7 +158,7 @@ def build_parser() -> argparse.ArgumentParser:
         default="127.0.0.1",
         help="Bind address (default: 127.0.0.1; the console has no auth).",
     )
-    console.add_argument("--port", type=int, default=8765, help="Port (default: 8765).")
+    console.add_argument("--port", type=int, default=8766, help="Port (default: 8766).")
     console.add_argument(
         "--projects-dir", default="projects", help="Projects root (default: projects)."
     )

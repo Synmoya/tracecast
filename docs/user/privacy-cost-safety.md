@@ -57,7 +57,7 @@ token usage 和操作者在 runtime 中填写的费率：
 
 ## Console 安全边界
 
-Console 没有用户认证。默认命令只监听 `127.0.0.1:8765`。
+Console 没有用户认证。默认命令只监听 `127.0.0.1:8766`。
 
 PowerShell：
 
@@ -84,6 +84,7 @@ Bash/zsh：
 
 ## 材料公开责任
 
-仓库的示例配置和示例素材只使用占位内容。你导入的 raw 来源和偏好文本可能受版权、保密协议、
+示例配置和 `projects/example/` 使用占位内容；`examples/console-case/` 包含用于追踪演示的真实历史摘录，
+其来源、删减项与公开范围见[案例说明](../../examples/console-case/README.md)。你导入的 raw 来源和偏好文本可能受版权、保密协议、
 个人信息或 provider 使用条款约束。Tracecast 不判断这些材料是否可以上传或公开；操作者必须在调用、
 提交、备份或分享之前完成授权与脱敏检查。

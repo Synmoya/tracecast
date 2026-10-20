@@ -1,0 +1,93 @@
+{
+  "version": "tracecast-console-case/1",
+  "scope": "historical_excerpt",
+  "local_run_id": "ff6-opening-excerpt-20260804",
+  "original_run_id": "ff6-ff6-full-20260804T144822099784Z",
+  "recorded_date": "2026-08-04",
+  "chunk_id": "chunk_ca8d217cd31ae60d",
+  "call_id": "call_07fadc9482cd4672aa74992c6b6cf173",
+  "chunk_index": 1,
+  "original_chunk_count": 50,
+  "complete_run_included": false,
+  "full_sources_included": false,
+  "saved_request_authoritative": true,
+  "source_title": "Final Fantasy VI SNES script",
+  "source_url": "https://finalfantasy.fandom.com/wiki/Final_Fantasy_VI_SNES_script",
+  "source_attribution_note": "来源：Final Fantasy Wiki（Fandom）。链接由早期项目来源清单补录；历史 source snapshot 的 URL 为空，原记录保持不变。",
+  "hashes": {
+    "chunk_text": "b6ddcfeb00f114d7d40741add67ae63a7ee63bac4071626bbcaf5f09a388feff",
+    "chunk_output": "b6ddcfeb00f114d7d40741add67ae63a7ee63bac4071626bbcaf5f09a388feff",
+    "request_envelope": "sha256:0fe95b4704b7cfa7796d0d9a1368b7b894cfd8cac816d2b5d3e5430a23e5109d",
+    "request_file": "f8b08cea946ce74b5df09ae555541cdcce920530431cf069b0ec6ee9979f205a",
+    "response_file": "9ec32236011f30925cf87842aef3cb0197c78559d40e4bab67f44ffd3503c17d"
+  },
+  "redactions": [
+    "LlmCallRecord.cost",
+    "LlmCallRecord.cost_kind",
+    "LlmCallRecord.key_id",
+    "LlmCallRecord.metadata.cost_profile",
+    "LlmCallRecord.metadata.cost_rates_source"
+  ],
+  "files": [
+    {
+      "path": "run/console/manifest.json",
+      "sha256": "ae7cf0ef75db54ef1d3ae2dc9c0a8711e7f7585ebb2a51a8ab9cd289eeafc00e",
+      "bytes": 815,
+      "treatment": "new presentation annotation; not the historical execution manifest"
+    },
+    {
+      "path": "run/ingestion/material_atoms.jsonl",
+      "sha256": "8d965f6e47134ecc02cfe922af21bc771a8edfeee429f13cafb2d7939a490b89",
+      "bytes": 10399,
+      "treatment": "unchanged selected historical records"
+    },
+    {
+      "path": "run/ingestion/source_pieces.jsonl",
+      "sha256": "bf3ef932598907788f4e8937aa50980ad54741f0f72275fe92f9967651212c4b",
+      "bytes": 7533,
+      "treatment": "unchanged selected historical records"
+    },
+    {
+      "path": "run/ingestion/source_snapshots.jsonl",
+      "sha256": "554ddebed6a85d67434b734b23739c4992d43693282d61aa97257d92b0c7c860",
+      "bytes": 386,
+      "treatment": "unchanged selected historical records"
+    },
+    {
+      "path": "run/llm/call_records.jsonl",
+      "sha256": "dba9a69fcf893d3ac558d8254f38e2292f8257246e4090e45bb7c857a6e7ee0a",
+      "bytes": 1703,
+      "treatment": "typed historical record with cost and key labels removed"
+    },
+    {
+      "path": "run/llm/raw/call_07fadc9482cd4672aa74992c6b6cf173.request.json",
+      "sha256": "f8b08cea946ce74b5df09ae555541cdcce920530431cf069b0ec6ee9979f205a",
+      "bytes": 32723,
+      "treatment": "unchanged selected historical records"
+    },
+    {
+      "path": "run/llm/raw/call_07fadc9482cd4672aa74992c6b6cf173.response.json",
+      "sha256": "9ec32236011f30925cf87842aef3cb0197c78559d40e4bab67f44ffd3503c17d",
+      "bytes": 5308,
+      "treatment": "unchanged selected historical records"
+    },
+    {
+      "path": "run/packing/chunk_plan.json",
+      "sha256": "d6c1689099ef0ccfc3c01618d8ecb2ce0fdc9ccb383fd8a5d58c0ab1d68e2a8d",
+      "bytes": 1288,
+      "treatment": "first historical chunk and policy; excerpt metadata replaces global metadata"
+    },
+    {
+      "path": "run/packing/render_contracts.jsonl",
+      "sha256": "f66c01963aeff4a289d9442ff723851da85578c5539c9dd433517104a49e23d9",
+      "bytes": 11421,
+      "treatment": "unchanged selected historical records"
+    },
+    {
+      "path": "run/rendering/chunk_artifacts.jsonl",
+      "sha256": "7e3b1e681e4960097bbf143c213f0e18ecd9b216b179a37c9b43eb26d8baa41a",
+      "bytes": 5834,
+      "treatment": "unchanged selected historical records"
+    }
+  ]
+}

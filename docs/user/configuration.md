@@ -146,19 +146,20 @@ Host 独立保存在 `hosts/<host-id>.json`，可以被多个项目复用。完�
 的 `output_language` 必须与本次有效输出语言完全一致。
 
 Console 提供只读 starter Host。也可以从 UTF-8 偏好文本构建新的 Host。
+以下示例读取仓库根目录下的 `preference-texts/`；请先放入文本，或替换为实际相对路径。
 
 PowerShell：
 
 ```powershell
 .\.venv\Scripts\python.exe -m tracecast host-build `
-  --host-id my_host D:\path\to\preference-texts
+  --host-id my_host preference-texts
 ```
 
 Bash/zsh：
 
 ```bash
 ./.venv/bin/python -m tracecast host-build \
-  --host-id my_host /path/to/preference-texts
+  --host-id my_host preference-texts
 ```
 
 目录输入只读取当前目录的 `*.txt`，不递归。Host Builder 使用两次 provider 调用，并在目标 Host ID

@@ -8,6 +8,7 @@ distribution checks.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import subprocess
 import sys
@@ -15,6 +16,7 @@ import tarfile
 import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
+from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -41,8 +43,46 @@ _PUBLIC_PREFIXES = (
     "tests/",
     "tools/",
 )
-_TEXT_SUFFIXES = {".css", ".html", ".js", ".json", ".md", ".py", ".toml", ".txt", ".yaml", ".yml"}
-_MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]+\]\((?P<target>[^)]+)\)")
+_TEXT_SUFFIXES = {
+    ".css", ".html", ".js", ".json", ".jsonl", ".md", ".mjs", ".py", ".toml", ".txt",
+    ".yaml", ".yml",
+}
+_MARKDOWN_LINK = re.compile(r"(?P<image>!)?\[[^\]]+\]\((?P<target>[^)]+)\)")
+_HTML_MEDIA = re.compile(
+    r"<(?:img|video|audio|source)\b[^>]*?\b(?:src|poster)=[\"'](?P<target>[^\"']+)[\"']",
+    re.IGNORECASE,
+)
+_CASE_PREFIX = "examples/console-case/"
+_CASE_CALL_ID = "call_07fadc9482cd4672aa74992c6b6cf173"
+_CASE_FILES = frozenset({
+    "README.md",
+    "case.json",
+    "run/console/manifest.json",
+    "run/ingestion/material_atoms.jsonl",
+    "run/ingestion/source_pieces.jsonl",
+    "run/ingestion/source_snapshots.jsonl",
+    "run/packing/chunk_plan.json",
+    "run/packing/render_contracts.jsonl",
+    "run/rendering/chunk_artifacts.jsonl",
+    "run/llm/call_records.jsonl",
+    f"run/llm/raw/{_CASE_CALL_ID}.request.json",
+    f"run/llm/raw/{_CASE_CALL_ID}.response.json",
+})
+_CASE_RECORD_COUNTS = {
+    "run/ingestion/material_atoms.jsonl": 10,
+    "run/ingestion/source_pieces.jsonl": 13,
+    "run/ingestion/source_snapshots.jsonl": 1,
+    "run/packing/render_contracts.jsonl": 1,
+    "run/rendering/chunk_artifacts.jsonl": 1,
+    "run/llm/call_records.jsonl": 1,
+}
+_KEY_LIKE = re.compile(
+    r"(?:sk|rk|pk)_(?:live|test)_[A-Za-z0-9]{12,}|sk-[A-Za-z0-9]{16,}|"
+    r"Bearer\s+[A-Za-z0-9._~-]{16,}",
+    re.IGNORECASE,
+)
+_LOCAL_PATH = re.compile(r"\b[A-Z]:[\\/]|/(?:Users|home)/", re.IGNORECASE)
+_PRIVATE_CASE_PATH = re.compile(r"(?:projects[\\/]ff6|runs[\\/]ff6-)", re.IGNORECASE)
 
 
 class PublicationError(RuntimeError):
@@ -62,6 +102,8 @@ def _git_lines(*args: str) -> list[str]:
 
 
 def _is_public_path(path: str) -> bool:
+    if path.startswith("examples/"):
+        return path.startswith(_CASE_PREFIX) and path[len(_CASE_PREFIX):] in _CASE_FILES
     if path in _PUBLIC_EXACT:
         return True
     if path in {
@@ -84,7 +126,7 @@ def check_tracked_paths() -> None:
 
 def _public_files() -> list[Path]:
     files = [ROOT / relative for relative in _PUBLIC_EXACT if (ROOT / relative).is_file()]
-    for prefix in _PUBLIC_PREFIXES:
+    for prefix in (*_PUBLIC_PREFIXES, _CASE_PREFIX):
         root = ROOT / prefix.rstrip("/")
         if root.is_dir():
             files.extend(
@@ -146,7 +188,6 @@ def check_internal_references() -> None:
 def check_public_text_hygiene() -> None:
     self_path = Path(__file__).resolve()
     bare_pip = re.compile(r"(?<!-m )\bpip\s+install\b", re.IGNORECASE)
-    private_example = re.compile(r"\bff6\b", re.IGNORECASE)
     findings: list[str] = []
     for path in _public_files():
         if path.resolve() == self_path or path.suffix.casefold() not in _TEXT_SUFFIXES:
@@ -156,8 +197,8 @@ def check_public_text_hygiene() -> None:
             reasons: list[str] = []
             if bare_pip.search(line):
                 reasons.append("bare pip command")
-            if private_example.search(line):
-                reasons.append("private example identifier")
+            if _PRIVATE_CASE_PATH.search(line):
+                reasons.append("private full-case path")
             if reasons:
                 findings.append(
                     f"{path.relative_to(ROOT)}:{line_number} ({', '.join(reasons)}): "
@@ -171,22 +212,29 @@ def check_public_text_hygiene() -> None:
 
 def _split_link_target(raw_target: str) -> str:
     target = raw_target.strip()
-    if target.startswith("<") and target.endswith(">"):
-        target = target[1:-1]
-    if " " in target:
+    if target.startswith("<") and ">" in target:
+        target = target[1:target.index(">")]
+    else:
         target = target.split(" ", 1)[0]
-    return target.split("#", 1)[0]
+    return unquote(target.split("#", 1)[0].split("?", 1)[0])
 
 
 def check_markdown_links() -> None:
-    documents = [ROOT / "README.md", *sorted((ROOT / "docs" / "user").glob("*.md"))]
+    documents = [
+        ROOT / "README.md", *sorted((ROOT / "docs" / "user").rglob("*.md")),
+        ROOT / _CASE_PREFIX / "README.md",
+    ]
     findings: list[str] = []
     for document in documents:
         if not document.is_file():
             findings.append(f"missing public document: {document.relative_to(ROOT)}")
             continue
         text = document.read_text(encoding="utf-8")
-        for match in _MARKDOWN_LINK.finditer(text):
+        matches = [
+            *((match, bool(match.group("image"))) for match in _MARKDOWN_LINK.finditer(text)),
+            *((match, True) for match in _HTML_MEDIA.finditer(text)),
+        ]
+        for match, is_media in matches:
             raw_target = match.group("target")
             target = _split_link_target(raw_target)
             if not target or target.startswith(("http://", "https://", "mailto:")):
@@ -201,6 +249,17 @@ def check_markdown_links() -> None:
                 continue
             if not resolved.exists():
                 findings.append(f"{document.relative_to(ROOT)}: missing link target: {raw_target}")
+            elif is_media and not resolved.is_file():
+                findings.append(
+                    f"{document.relative_to(ROOT)}: media target is not a file: {raw_target}"
+                )
+            elif relative == _CASE_PREFIX.rstrip("/") and resolved.is_dir():
+                try:
+                    check_console_case()
+                except PublicationError as exc:
+                    findings.append(
+                        f"{document.relative_to(ROOT)}: invalid case directory: {raw_target}: {exc}"
+                    )
             elif not _is_public_path(relative):
                 findings.append(
                     f"{document.relative_to(ROOT)}: link targets private file: {raw_target}"
@@ -217,18 +276,117 @@ def check_public_examples() -> None:
         ROOT / "hosts" / "example_host_zh.json",
         ROOT / "projects" / "example" / "sources.json",
     ]
-    suspicious = re.compile(
-        r"(?:sk|rk|pk)_(?:live|test)_[A-Za-z0-9]{12,}|sk-[A-Za-z0-9]{16,}|"
-        r"Bearer\s+[A-Za-z0-9._~-]{16,}",
-        re.IGNORECASE,
-    )
     findings = [
         str(path.relative_to(ROOT))
         for path in candidates
-        if path.is_file() and suspicious.search(path.read_text(encoding="utf-8"))
+        if path.is_file() and _KEY_LIKE.search(path.read_text(encoding="utf-8"))
     ]
     if findings:
         raise PublicationError("public examples contain key-like values: " + ", ".join(findings))
+
+
+def check_console_case() -> None:
+    """Allow one reviewed excerpt, not arbitrary projects, runs or source dumps."""
+    root = ROOT / _CASE_PREFIX
+    files = {path.relative_to(root).as_posix() for path in root.rglob("*") if path.is_file()}
+    for name in files:
+        path = root / name
+        if path.is_symlink() or not path.resolve().is_relative_to(root.resolve()):
+            raise PublicationError(f"{name}: case resource must be a local regular file")
+    _validate_case_payloads({name: (root / name).read_bytes() for name in files})
+
+
+def _validate_case_payloads(payloads: dict[str, bytes]) -> None:
+    missing = sorted(_CASE_FILES - payloads.keys())
+    unexpected = sorted(payloads.keys() - _CASE_FILES)
+    if missing or unexpected:
+        details = [*(f"missing {name}" for name in missing)]
+        details.extend(f"unexpected {name}" for name in unexpected)
+        raise PublicationError("console case file boundary failed:\n  " + "\n  ".join(details))
+    findings: list[str] = []
+
+    def inspect(value: object, filename: str) -> None:
+        if isinstance(value, dict):
+            for key, child in value.items():
+                normalized = key.casefold()
+                if normalized in {"api_key", "authorization", "api_key_env", "base_url",
+                                  "gateway_url"}:
+                    findings.append(f"{filename}: private configuration field {key}")
+                if normalized in {"cost", "cost_kind", "cost_profile", "key_id"} and (
+                    child is not None
+                ):
+                    findings.append(f"{filename}: private cost/key metadata {key}")
+                inspect(child, filename)
+        elif isinstance(value, list):
+            for child in value:
+                inspect(child, filename)
+        elif isinstance(value, str):
+            if _KEY_LIKE.search(value):
+                findings.append(f"{filename}: key-like value")
+            if _LOCAL_PATH.search(value) or _PRIVATE_CASE_PATH.search(value):
+                findings.append(f"{filename}: private filesystem path")
+
+    for name, data in sorted(payloads.items()):
+        try:
+            raw = data.decode("utf-8")
+            if name.endswith(".jsonl"):
+                values = [json.loads(line) for line in raw.splitlines() if line.strip()]
+            elif name.endswith(".json"):
+                values = [json.loads(raw)]
+            else:
+                values = [raw]
+        except (ValueError, UnicodeError) as exc:
+            findings.append(f"{name}: invalid UTF-8 JSON: {exc}")
+            continue
+        if name in _CASE_RECORD_COUNTS and len(values) != _CASE_RECORD_COUNTS[name]:
+            findings.append(f"{name}: expected {_CASE_RECORD_COUNTS[name]} excerpt records")
+        for value in values:
+            inspect(value, name)
+    if findings:
+        raise PublicationError("console case contains private data:\n  " + "\n  ".join(findings))
+
+
+def _validate_archive_payloads(payloads: dict[str, bytes]) -> None:
+    """The reusable case is checkout-only; distributions contain no run records."""
+    findings: list[str] = []
+    for name, data in payloads.items():
+        parts = PurePosixPath(name).parts
+        if any(part.startswith(".env") and part != ".env.example" for part in parts):
+            findings.append(f"{name}: distribution contains local environment configuration")
+        if PurePosixPath(name).suffix.casefold() in {".mp4", ".webm", ".mov"}:
+            findings.append(f"{name}: distribution contains recording video")
+        if any(part in {"examples", "runs", "projects"} for part in parts) and not (
+            name.startswith("projects/example/")
+        ):
+            findings.append(f"{name}: distribution contains checkout-only/private data")
+        if name.endswith(".jsonl"):
+            findings.append(f"{name}: distribution contains runtime JSONL records")
+        if PurePosixPath(name).suffix.casefold() in {".json", ".jsonl"}:
+            try:
+                text = data.decode("utf-8")
+            except UnicodeError:
+                findings.append(f"{name}: invalid UTF-8 data")
+                continue
+            if (
+                _KEY_LIKE.search(text) or _LOCAL_PATH.search(text)
+                or _PRIVATE_CASE_PATH.search(text)
+            ):
+                findings.append(f"{name}: distribution contains private data")
+    if findings:
+        raise PublicationError("distribution data boundary failed:\n  " + "\n  ".join(findings))
+
+
+def _validate_sdist_payloads(archive: Path) -> None:
+    with tarfile.open(archive, "r:gz") as bundle:
+        payloads = {}
+        for member in bundle.getmembers():
+            if not member.isfile():
+                continue
+            relative = PurePosixPath(*PurePosixPath(member.name).parts[1:]).as_posix()
+            stream = bundle.extractfile(member)
+            if stream is not None:
+                payloads[relative] = stream.read()
+    _validate_archive_payloads(payloads)
 
 
 def _run_build(source: Path, outdir: Path, *targets: str) -> None:
@@ -306,6 +464,9 @@ def _validate_sdist(files: set[str]) -> None:
 def _validate_wheel(archive: Path) -> None:
     with zipfile.ZipFile(archive) as bundle:
         files = set(bundle.namelist())
+        _validate_archive_payloads({
+            path: bundle.read(path) for path in files if not path.endswith("/")
+        })
     expected_prompt = {
         f"tracecast/prompt/{path.relative_to(ROOT / 'prompt').as_posix()}"
         for path in (ROOT / "prompt").rglob("*")
@@ -348,6 +509,7 @@ def check_distributions() -> None:
         if len(sdists) != 1 or len(wheels) != 1:
             raise PublicationError("build must produce exactly one sdist and one wheel")
         _validate_sdist(_sdist_files(sdists[0]))
+        _validate_sdist_payloads(sdists[0])
         _validate_wheel(wheels[0])
 
         unpacked = temp / "unpacked"
@@ -379,6 +541,7 @@ def main(argv: list[str] | None = None) -> int:
         check_public_text_hygiene,
         check_markdown_links,
         check_public_examples,
+        check_console_case,
         check_distributions,
     ]
     if not args.skip_repository_boundary:

@@ -1,0 +1,25 @@
+{
+  "artifact_sources": {},
+  "base_run_id": null,
+  "copied_artifacts": [],
+  "created_at": "2026-08-04T14:55:21.013826+00:00",
+  "effective": {
+    "output_language": "zh-CN",
+    "project_id": "ff6-opening-excerpt"
+  },
+  "error": "历史摘录：仅原运行第 1/50 段。未包含完整计划、原始来源全文或整稿；此处不能重跑。实际保存的旧请求为权威输入。",
+  "excerpt": {
+    "annotation_only": true,
+    "included_chunk_index": 1,
+    "original_chunk_count": 50,
+    "original_run_id": "ff6-ff6-full-20260804T144822099784Z"
+  },
+  "job_id": null,
+  "kind": "historical_excerpt",
+  "request": {
+    "project_id": "ff6-opening-excerpt",
+    "run_label": "2026-08-04 · FF6 历史摘录 1/50"
+  },
+  "schema": "tracecast-console-manifest/1",
+  "status": "historical_excerpt"
+}

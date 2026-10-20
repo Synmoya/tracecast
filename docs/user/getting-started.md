@@ -1,16 +1,18 @@
 # 安装与首次运行
 
 本页帮助你从源码安装 Tracecast，并通过本地 Console 或 CLI 完成一个小规模 Run。
+以下命令均在源码仓库根目录执行。只想无密钥浏览已有记录时，可安装后直接按[历史案例指南](console-case.md)操作。
 
 在连接 provider 前，请先阅读[隐私、成本与安全](privacy-cost-safety.md)。Tracecast 会把材料内容
 发送给你配置的 gateway，并把模型请求、响应和中间产物保存在本地。
 
 ## 前置条件
 
-- Python 3.12 或更高版本；
+安装与浏览历史案例需要 Python 3.12 或更高版本。生成新脚本时还需要：
+
 - 一个 OpenAI-compatible Chat Completions gateway；
 - gateway 的 API key 和实际模型名；
-- 允许发送给该 provider 的本地文本材料。
+- 允许发送给该 provider 的文本材料。
 
 项目目前只支持从源码安装，不通过 PyPI 发布。
 
@@ -51,7 +53,7 @@ Bash/zsh：
 ./.venv/bin/python -m tracecast console
 ```
 
-终端出现 Uvicorn 的启动信息后，打开 `http://127.0.0.1:8765/`。
+终端出现 Uvicorn 的启动信息后，打开 `http://127.0.0.1:8766/`。
 
 1. 在首次设置页填写 gateway URL、Chat Completions path、API key 和模型名。
    设置成功后，本地 `configs/runtime.json` 保存连接和模型配置，本地 `.env` 保存
@@ -63,11 +65,16 @@ Bash/zsh：
 5. 确认项目 ID、来源语言、输出语言和专名方式，然后创建项目。项目目录会写入 `projects/<id>/`。
 6. 新建完整 Run，选择与输出语言完全一致的 Host。检查估算后再确认执行。
 
-Run 成功后，结果页显示脚本和审计信息；同一结果保存在：
+Run 成功后，结果页显示脚本和审计信息；完整运行的输出位于 `runs/<run-id>/`：
 
-```text
-runs/<run-id>/assembly/script.md
-```
+| 路径 | 内容 |
+|---|---|
+| `assembly/script.md` | 拼接后的脚本 |
+| `assembly/assembly_report.json` | 拼接完整性与问题报告 |
+| 各阶段目录及 `validation/audit_report.jsonl` | 结构化产物与审计记录 |
+| `llm/call_records.jsonl`、`llm/raw/` | 调用记录与原始请求、响应 |
+
+失败运行会保留已写入的诊断，可能没有后续产物。这些文件可能含原始材料与模型响应，分享前应检查内容。
 
 按 `Ctrl+C` 停止 Console。停止服务不会删除项目或已经写入的 Run。
 
